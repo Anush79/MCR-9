@@ -1,3 +1,6 @@
+:root{
+  --primary:#8b0000;
+}
 .App {
   text-align: center;
 }
@@ -35,4 +38,27 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+a:hover{
+  background-color: rgb(253, 198, 198);
+}
+.active{
+  background-color: var(--primary);
+  color:white;
+  
+}
+button{
+  padding:0.5rem;
+  background-color: var(--primary);
+  text-align: center;
+  color: aliceblue;
+  border-radius: 0.5rem;
+}
+span svg{
+  color:#1133dd;
+
+  font-size: 73px;
+  height: 300px;
+  width: 300px;
 }

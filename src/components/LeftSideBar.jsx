@@ -5,19 +5,19 @@ export default function NavBar(){
 
   return (
     <>
-    <div className="navbar w-1/4 flex flex-col items-start p-4 gap-8 justify-between">
+    <div className="navbar  w-[250px] h-[90vh] flex flex-col items-start p-2 gap-2 border-r-2">
 
       <NavLink to='/'>
-       <div>Home</div>
+       <div className='p-4 rounded-lg'>Home</div>
       </NavLink>
       <NavLink to='/explore'>
-       <div>Explore</div>
+       <div className='p-4 rounded-lg'>Explore</div>
       </NavLink >
       <NavLink to='/playlists'>
-       <div>Playlists</div>
+       <div className='p-4 rounded-lg'>Playlists</div>
       </NavLink>
       <NavLink to='/watchlist'>
-       <div>Watch Later</div>
+       <div className='p-4 rounded-lg'>Watch Later</div>
       </NavLink>
       
       </div>    
