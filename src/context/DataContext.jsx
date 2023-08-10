@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import { toast } from "react-toastify";
 import { videos } from "../db/videos";
 const DataContext = createContext();
@@ -35,7 +35,7 @@ const initialState = {
 };
 const reducerFunction = (state, action) => {
   const { type, payload } = action;
-  console.log(payload.playlist)
+
   switch (type) {
     case "ADD_PLAYLIST":
       if (state.playlists.find((item) => item.name === payload.playlist)) {
@@ -48,34 +48,70 @@ const reducerFunction = (state, action) => {
           playlists: [...state.playlists, { name: payload, videos: [] }],
         };
       }
+    case "DELETE_PLAYLIST":
+      toast.info("Playlist Deleted");
+      return {
+        ...state,
+        playlists: state.playlists.filter((item) => item.name !== payload),
+      };
+
     case "ADD_TO_PLAYLIST":
-      const foundPlaylist = state.playlists.find(
-        (item) =>{
-         
-          return item.name === payload.playlist}
-      );
-      console.log({foundPlaylist})
+      const foundPlaylist = state?.playlists?.find((item) => {
+        return item.name === payload.playlist;
+      });
+
       if (foundPlaylist) {
         if (
           foundPlaylist.videos.find((item) => item._id === payload.video._id)
         ) {
           toast.warn("This video is already present in the Playlist");
-          return;
+          return state;
         } else {
-          return { ...state, playlists: [payload.video, ...state.playlists] };
+          const updatedPlaylist = [payload.video, ...foundPlaylist.videos];
+          const updatedState = {
+            ...state,
+            playlists: state.playlists.map((item) =>
+              item.name === payload.playlist
+                ? { ...item, videos: updatedPlaylist }
+                : item
+            ),
+          };
+          toast.success("Added to playlist");
+          return updatedState;
         }
-      }else return state;
+      } else {
+        toast.error("playlist not found");
+        return state;
+      }
     case "ADD_TO_WATCHLATER":
-      break;
+      if (state.watchLater.find((item) => item._id === payload._id))
+       {toast.info("Video removed from Watch Later")
+      return {
+          ...state,
+          watchLater: state.watchLater.filter(
+            (item) => item._id !== payload._id
+          ),
+        };}
+      else {
+        toast.success("Added to WatchLater");
+        return { ...state, watchLater: [payload, ...state.watchLater] };
+      }
+
     default:
       break;
   }
 };
 
+const localData = JSON.parse(localStorage.getItem("personalData"));
 export function DataProvider({ children }) {
-  const [personalData, dispatch] = useReducer(reducerFunction, initialState);
+  const [personalData, dispatch] = useReducer(
+    reducerFunction,
+    localData ?? initialState
+  );
 
-  console.log({ personalData });
+  useEffect(() => {
+    localStorage.setItem("personalData", JSON.stringify(personalData));
+  }, [personalData]);
   return (
     <DataContext.Provider value={{ personalData, dispatch }}>
       {children}

@@ -25,23 +25,17 @@ export default function VideoCard({ item }) {
             </p>
           </p>
         </div>
-
+        </NavLink>
         <div onClick={(e)=>{e.stopPropagation()}} className="pl-1 flex gap-2 justify-around">
           <button onClick={(e)=>{
             e.stopPropagation()
             dispatch({type:"ADD_TO_PLAYLIST" , payload:{video:item, playlist:"xyz"}})}}>Add to playlist</button>
-          <button >Add to WatchLater</button>
+          <button onClick={(e)=>{
+            e.stopPropagation()
+            dispatch({type:"ADD_TO_WATCHLATER" , payload:item})}}>Add to WatchLater</button>
         </div>
-      </NavLink>
+      
 
     </div>
   );
 }
-// _id: 19,
-//     title: 'Origami Swan - Simple and Elegant',
-//     views: 2879,
-//     chips: ['origami', 'swan', 'paper', 'elegant'],
-//     thumbnail: 'https://picsum.photos/300/174',
-//     src: 'https://www.youtube.com/embed/GBIIQ0kP15E',
-//     category: 'Origami',
-//     creator: 'PaperCraftPro',

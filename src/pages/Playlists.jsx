@@ -5,6 +5,7 @@ import AddPlaylist from "../components/AddPlalist";
 import LeftSideBar from "../components/LeftSideBar";
 
 import { useData } from "../context/DataContext";
+import { NavLink } from "react-router-dom";
 export default function Playlist() {
   const { personalData, dispatch } = useData();
   const [open, setOpen] = useState(false);
@@ -22,14 +23,20 @@ export default function Playlist() {
           <div className="flex gap-2 flex-wrap p-4 ">
             {personalData?.playlists?.map((item) => (
               <div className="flex flex-col">
+                <NavLink to={`/playlist/${item.name}`}>
                 <img
                   src="https://www.picsum.photos/150"
                   alt="playlist xyz"
                  
                   className="rounded-lg"
                 />
-                {item.name}
-              </div>
+                </NavLink>
+                <div className="flex flex-col">
+                <span className="">{item.name}</span>
+                <button onClick={()=>{dispatch({type:"DELETE_PLAYLIST", payload:item.name})}}>Delete {item.name}</button>
+             
+                </div>
+                 </div>
             ))}
           </div>
           <span

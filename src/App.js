@@ -10,6 +10,7 @@ import Watch from "./pages/WatchLater";
 import Explore from "./pages/Explore";
 import SinglePage from './pages/SingleVideo'
 import Category from "./pages/Category";
+import Playlist from "./pages/Playlist";
 function App() {
   return (
     <div className="App">
@@ -19,12 +20,14 @@ function App() {
         <Route path="/" element={<Home />} />
 
         <Route path="/playlists" element={<Playlists />} />
+        <Route path='/playlist/:listName' element= {<Playlist/>} />
+
         <Route path='/categories/:catName' element={<Category />} />
         <Route path='/video/:videoId' element={<SinglePage />} />
         <Route path="/watchlist" element={<Watch />} />
         <Route path="/explore" element={<Explore />} />
       </Routes>
-      {/* <ToastContainer
+      <ToastContainer
         position="top-center"
         autoClose={800}
         hideProgressBar={false}
@@ -35,7 +38,7 @@ function App() {
         draggable
         pauseOnHover
         theme="light"
-      /> */}
+      />
     </div>
   );
 }
